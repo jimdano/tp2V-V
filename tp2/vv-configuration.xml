@@ -1,0 +1,98 @@
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<groupId>istic</groupId>
+	<artifactId>vv-configuration</artifactId>
+	<version>3</version>
+	<packaging>pom</packaging>
+	<dependencies><!-- JUnit dependency -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+		</dependency><!-- Mockito dependency -->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.9.5</version>
+		</dependency><!-- Derby dependency -->
+		<dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derby</artifactId>
+			<version>10.10.1.1</version>
+		</dependency><!-- DBUnit dependency -->
+		<dependency>
+			<groupId>org.dbunit</groupId>
+			<artifactId>dbunit</artifactId>
+			<version>2.4.9</version>
+		</dependency><!-- JUnit dependency -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+		</dependency><!-- slf4j dependency -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>1.5.5</version>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins><!-- Javadoc plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9.1</version>
+				<configuration>
+					<tags>
+						<tag>
+							<name>type</name>
+							<placement>m</placement>
+							<head>Type:</head>
+							new
+						</tag>
+						<tag>
+							<name>input</name>
+							<placement>m</placement>
+							<head>Input:</head>
+						</tag>
+						<tag>
+							<name>oracle</name>
+							<placement>m</placement>
+							<head>Oracle:</head>
+						</tag>
+						<tag>
+							<name>passed</name>
+							<placement>m</placement>
+							<head>Passed:</head>
+						</tag>
+						<tag>
+							<name>correction</name>
+							<placement>m</placement>
+							<head>Correction:</head>
+						</tag>
+					</tags>
+				</configuration>
+			</plugin><!-- Jacobo (code coverage) plugin -->
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.6.3.201306030806</version>
+				<executions>
+					<execution>
+						<id>prepare-agent</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

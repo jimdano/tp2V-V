@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<javadocOptions>
+  <tags>
+    <tag>
+      <name>type</name>
+      <head>Type:</head>
+    </tag>
+    <tag>
+      <name>input</name>
+      <head>Input:</head>
+    </tag>
+    <tag>
+      <name>oracle</name>
+      <head>Oracle:</head>
+    </tag>
+    <tag>
+      <name>passed</name>
+      <head>Passed:</head>
+    </tag>
+    <tag>
+      <name>correction</name>
+      <head>Correction:</head>
+    </tag>
+  </tags>
+  <docletArtifacts>
+    <docletArtifact />
+  </docletArtifacts>
+  <tagletArtifacts>
+    <tagletArtifact />
+  </tagletArtifacts>
+  <javadocResourcesDirectory>src/main/javadoc</javadocResourcesDirectory>
+</javadocOptions>

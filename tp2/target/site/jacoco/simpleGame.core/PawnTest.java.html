@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>PawnTest.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tp2</a> &gt; <a href="index.html" class="el_package">simpleGame.core</a> &gt; <span class="el_source">PawnTest.java</span></div><h1>PawnTest.java</h1><pre class="source lang-java linenums">/**
+ * 
+ */
+package simpleGame.core;
+import static org.mockito.Mockito.*;
+import static org.junit.Assert.*;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+
+import simpleGame.exception.OutOfBoardException;
+
+/**
+ * @author 10003134
+ *
+ */
+@RunWith(MockitoJUnitRunner.class)
+<span class="nc" id="L23">public class PawnTest {</span>
+
+	@Mock
+	private Board board;
+	private Pawn pawn;
+	private Pawn pawn1;
+<span class="nc" id="L29">	private int x = 1;</span>
+<span class="nc" id="L30">	private int y = 1;</span>
+<span class="nc" id="L31">	private char c = 'c';</span>
+<span class="nc" id="L32">	private Direction up = Direction.Up;</span>
+<span class="nc" id="L33">	private Direction down = Direction.Down;</span>
+<span class="nc" id="L34">	private Direction left = Direction.Left;</span>
+<span class="nc" id="L35">	private Direction right = Direction.Right;</span>
+	
+	
+	/**
+	 * @throws java.lang.Exception
+	 */
+	@Before
+	public void setUp() throws Exception {
+<span class="nc" id="L43">		pawn = new Pawn(c, x, y, board);</span>
+<span class="nc" id="L44">		pawn1 = new Pawn(c, x, y, board);</span>
+<span class="nc" id="L45">	}</span>
+
+	/**
+	 * @throws java.lang.Exception
+	 */
+	@After
+	public void tearDown() throws Exception {
+<span class="nc" id="L52">	}</span>
+
+	/**
+	 * Test method for {@link simpleGame.core.Pawn#getX()}.
+	 */
+	@Test
+	public void testGetX() {
+<span class="nc" id="L59">		assertEquals(pawn1.getX(), x);</span>
+<span class="nc" id="L60">	}</span>
+
+	/**
+	 * Test method for {@link simpleGame.core.Pawn#getY()}.
+	 */
+	@Test
+	public void testGetY() {
+<span class="nc" id="L67">		assertEquals(pawn1.getY(), y);</span>
+<span class="nc" id="L68">	}</span>
+
+	/**
+	 * Test method for {@link simpleGame.core.Pawn#getLetter()}.
+	 */
+	@Test
+	public void testGetLetter() {
+<span class="nc" id="L75">		assertEquals(pawn1.getLetter(), c);</span>
+<span class="nc" id="L76">	}</span>
+
+	/**
+	 * Test method for {@link simpleGame.core.Pawn#getGold()}.
+	 */
+	@Test
+	public void testGetGold() {
+<span class="nc" id="L83">		assertEquals(pawn1.getGold(), 0);</span>
+<span class="nc" id="L84">	}</span>
+
+	/**
+	 * Test method for {@link simpleGame.core.Pawn#Pawn(char, int, int, simpleGame.core.Board)}.
+	 */
+	@Test
+	public void testPawn() {
+		
+<span class="nc" id="L92">	}</span>
+
+	
+	
+	/**
+	 * Test method for {@link simpleGame.core.Pawn#move(simpleGame.core.Direction)}.
+	 */
+	@Test
+	public void testMove2() {
+		
+		/*utiliser le mock*/
+<span class="nc" id="L103">		when(board.getYSize()).thenReturn(3);</span>
+<span class="nc" id="L104">		when(board.getXSize()).thenReturn(3);</span>
+<span class="nc" id="L105">		when(board.getSquareContent(x,y+1)).thenReturn(null);</span>
+<span class="nc" id="L106">		when(board.getSquareContent(x+1,y)).thenReturn(pawn1);</span>
+<span class="nc" id="L107">		when(board.isBonusSquare(x, y)).thenReturn(true);</span>
+		
+		try {
+<span class="nc" id="L110">			pawn.move(up);</span>
+<span class="nc bnc" id="L111" title="All 4 branches missed.">			assertTrue(pawn.getX() == x &amp;&amp; pawn.getY() == y+1);</span>
+<span class="nc" id="L112">			pawn.move(down);</span>
+			
+<span class="nc" id="L114">			pawn.move(right);</span>
+<span class="nc" id="L115">			assertTrue(pawn1.isDead());</span>
+			
+<span class="nc" id="L117">		} catch (OutOfBoardException e) {</span>
+<span class="nc" id="L118">			e.printStackTrace();</span>
+		}
+		
+<span class="nc" id="L121">	}</span>
+	
+	/**
+	 * Test method for {@link simpleGame.core.Pawn#move(simpleGame.core.Direction)}.
+	 */
+	@Test
+	public void testMove3() {
+		
+		/*utiliser le mock*/
+<span class="nc" id="L130">		when(board.getYSize()).thenReturn(3);</span>
+<span class="nc" id="L131">		when(board.getXSize()).thenReturn(3);</span>
+<span class="nc" id="L132">		when(board.getSquareContent(x+1,y)).thenReturn(pawn1);</span>
+<span class="nc" id="L133">		when(board.isBonusSquare(x, y)).thenReturn(false);</span>
+		
+		try {
+<span class="nc" id="L136">			pawn.move(right);</span>
+<span class="nc" id="L137">			assertFalse(pawn1.isDead());</span>
+			
+<span class="nc" id="L139">		} catch (OutOfBoardException e) {</span>
+<span class="nc" id="L140">			e.printStackTrace();</span>
+		}
+		
+<span class="nc" id="L143">	}</span>
+	
+	/**
+	 * Test method for {@link simpleGame.core.Pawn#isDead()}.
+	 */
+	@Test
+	public void testIsDead() {
+		
+<span class="nc" id="L151">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.3.201306030806</span></div></body></html>
