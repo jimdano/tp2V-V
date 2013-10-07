@@ -45,11 +45,11 @@ public class Board {
 
 
     public int getXSize() {
-<span class="nc" id="L48">        return xSize;</span>
+<span class="fc" id="L48">        return xSize;</span>
     }
 
     public int getYSize() {
-<span class="nc" id="L52">        return ySize;</span>
+<span class="fc" id="L52">        return ySize;</span>
     }
 
     
@@ -61,22 +61,22 @@ public class Board {
      * @param sizeX The number of squares on the x axis.
      * @param sizeY The number of squares on the y axis.
      */
-<span class="nc" id="L64">    public Board(int numberOfPawns, int sizeX,</span>
+<span class="fc" id="L64">    public Board(int numberOfPawns, int sizeX,</span>
                  int sizeY) {
-<span class="nc" id="L66">        Random random = new Random();</span>
-<span class="nc" id="L67">        this.xSize = sizeX;</span>
-<span class="nc" id="L68">        this.ySize = sizeY;</span>
-<span class="nc" id="L69">        this.xBonusSquare = random.nextInt(xSize);</span>
-<span class="nc" id="L70">        this.yBonusSquare = random.nextInt(ySize);</span>
-<span class="nc" id="L71">        this.pawns = new ArrayList&lt;Pawn&gt;();</span>
-<span class="nc bnc" id="L72" title="All 2 branches missed.">        for(int i = 0; i&lt;numberOfPawns; i++) {</span>
-<span class="nc" id="L73">            Pawn pawn = new Pawn(Character.forDigit(i, 10),</span>
-<span class="nc" id="L74">                                 random.nextInt(xSize),random.nextInt(ySize),this);</span>
-<span class="nc" id="L75">            this.addPawn(pawn);</span>
+<span class="fc" id="L66">        Random random = new Random();</span>
+<span class="fc" id="L67">        this.xSize = sizeX;</span>
+<span class="fc" id="L68">        this.ySize = sizeY;</span>
+<span class="fc" id="L69">        this.xBonusSquare = random.nextInt(xSize);</span>
+<span class="fc" id="L70">        this.yBonusSquare = random.nextInt(ySize);</span>
+<span class="fc" id="L71">        this.pawns = new ArrayList&lt;Pawn&gt;();</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">        for(int i = 0; i&lt;numberOfPawns; i++) {</span>
+<span class="fc" id="L73">            Pawn pawn = new Pawn(Character.forDigit(i, 10),</span>
+<span class="fc" id="L74">                                 random.nextInt(xSize),random.nextInt(ySize),this);</span>
+<span class="fc" id="L75">            this.addPawn(pawn);</span>
         }
 
-<span class="nc" id="L78">        currentPawn = pawns.get(0);</span>
-<span class="nc" id="L79">    }</span>
+<span class="fc" id="L78">        currentPawn = pawns.get(0);</span>
+<span class="fc" id="L79">    }</span>
 
     /**
      * Finds the content of a square.
@@ -85,12 +85,12 @@ public class Board {
      * @return The pawn found, or null if no pawn.
      */
     public Pawn getSquareContent(int x, int y) {
-<span class="nc bnc" id="L88" title="All 2 branches missed.">        for (Pawn p : pawns) {</span>
-<span class="nc bnc" id="L89" title="All 4 branches missed.">            if ((p.getX() == x) &amp;&amp;(p.getY() == y)) {</span>
-<span class="nc" id="L90">                return p;</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">        for (Pawn p : pawns) {</span>
+<span class="fc bfc" id="L89" title="All 4 branches covered.">            if ((p.getX() == x) &amp;&amp;(p.getY() == y)) {</span>
+<span class="fc" id="L90">                return p;</span>
             }
         }
-<span class="nc" id="L93">        return null;</span>
+<span class="fc" id="L93">        return null;</span>
     }
 
     /**
@@ -98,18 +98,18 @@ public class Board {
      * @param pawn The pawn to remove.
      */
     public void removePawn(Pawn pawn) {
-<span class="nc" id="L101">        pawns.remove(pawn);</span>
-<span class="nc" id="L102">    }</span>
+<span class="fc" id="L101">        pawns.remove(pawn);</span>
+<span class="fc" id="L102">    }</span>
 
     /**
      * Adds a pawn to the board.
      * @param pawn The pawn to add.
      */
     public void addPawn(Pawn pawn) {
-<span class="nc bnc" id="L109" title="All 2 branches missed.">        if (getSquareContent(pawn.getX(),</span>
-<span class="nc" id="L110">                             pawn.getY()) == null)</span>
-<span class="nc" id="L111">            this.pawns.add(pawn);</span>
-<span class="nc" id="L112">    }</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">        if (getSquareContent(pawn.getX(),</span>
+<span class="fc" id="L110">                             pawn.getY()) == null)</span>
+<span class="fc" id="L111">            this.pawns.add(pawn);</span>
+<span class="fc" id="L112">    }</span>
 
     /**
      * Decides whether a square is bonus or not.
@@ -118,7 +118,7 @@ public class Board {
      * @return True if the square is bonus, false otherwise.
      */
     public boolean isBonusSquare(int x, int y) {
-<span class="nc bnc" id="L121" title="All 4 branches missed.">        return x==xBonusSquare &amp;&amp; y==yBonusSquare;</span>
+<span class="fc bfc" id="L121" title="All 4 branches covered.">        return x==xBonusSquare &amp;&amp; y==yBonusSquare;</span>
     }
 
 
@@ -127,7 +127,7 @@ public class Board {
      * @return The number of pawns on the board.
      */
     public int numberOfPawns() {
-<span class="nc" id="L130">        return pawns.size();</span>
+<span class="fc" id="L130">        return pawns.size();</span>
     }
 
     /**
@@ -135,11 +135,11 @@ public class Board {
      * @return The maximum amount of golf that a Pawn has.
      */
     public int maxGold() {
-<span class="nc" id="L138">        int max = 0;</span>
-<span class="nc bnc" id="L139" title="All 2 branches missed.">        for (Pawn p : pawns) {</span>
-<span class="nc" id="L140">            max = Math.max(max, p.getGold());</span>
+<span class="fc" id="L138">        int max = 0;</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">        for (Pawn p : pawns) {</span>
+<span class="fc" id="L140">            max = Math.max(max, p.getGold());</span>
         }
-<span class="nc" id="L142">        return max;</span>
+<span class="fc" id="L142">        return max;</span>
     }
 
     /**
@@ -147,15 +147,15 @@ public class Board {
      * @return The next pawn that is allowed to play.
      */
     public Pawn getNextPawn() {
-<span class="nc bnc" id="L150" title="All 2 branches missed.">        if (pawns.size() == 1) {</span>
-<span class="nc" id="L151">            currentPawn = pawns.get(0);</span>
-<span class="nc" id="L152">            return pawns.get(0);</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">        if (pawns.size() == 1) {</span>
+<span class="fc" id="L151">            currentPawn = pawns.get(0);</span>
+<span class="fc" id="L152">            return pawns.get(0);</span>
         }
         else {
-<span class="nc" id="L155">            Pawn result = currentPawn;</span>
-<span class="nc" id="L156">            currentPawn = this.pawns.get((this.pawns.indexOf(</span>
-<span class="nc" id="L157">                                              currentPawn)+1)%this.pawns.size());</span>
-<span class="nc" id="L158">            return result;</span>
+<span class="fc" id="L155">            Pawn result = currentPawn;</span>
+<span class="fc" id="L156">            currentPawn = this.pawns.get((this.pawns.indexOf(</span>
+<span class="fc" id="L157">                                              currentPawn)+1)%this.pawns.size());</span>
+<span class="fc" id="L158">            return result;</span>
         }
     }
 
@@ -167,34 +167,34 @@ public class Board {
      */
     public char squareContentSprite(int x, int y) {
         char result;
-<span class="nc" id="L170">        Pawn content = getSquareContent(x,y);</span>
-<span class="nc bnc" id="L171" title="All 2 branches missed.">        if (content == null) {</span>
-<span class="nc bnc" id="L172" title="All 2 branches missed.">            if (isBonusSquare(x, y)) {</span>
-<span class="nc" id="L173">                result = '#';</span>
-<span class="nc" id="L174">            } else</span>
-<span class="nc" id="L175">                result = '.';</span>
-<span class="nc" id="L176">        } else {</span>
-<span class="nc bnc" id="L177" title="All 2 branches missed.">            if (content == currentPawn) {</span>
-<span class="nc" id="L178">                result = 'c';</span>
-<span class="nc" id="L179">            } else</span>
-<span class="nc" id="L180">                result = content.getLetter();</span>
+<span class="fc" id="L170">        Pawn content = getSquareContent(x,y);</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">        if (content == null) {</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">            if (isBonusSquare(x, y)) {</span>
+<span class="fc" id="L173">                result = '#';</span>
+<span class="fc" id="L174">            } else</span>
+<span class="fc" id="L175">                result = '.';</span>
+<span class="fc" id="L176">        } else {</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">            if (content == currentPawn) {</span>
+<span class="fc" id="L178">                result = 'c';</span>
+<span class="fc" id="L179">            } else</span>
+<span class="fc" id="L180">                result = content.getLetter();</span>
         }
-<span class="nc" id="L182">        return result;</span>
+<span class="fc" id="L182">        return result;</span>
     }
 
     /**
      * Computes a String that represents the whole board.
      */
     public String toString() {
-<span class="nc" id="L189">        String result = &quot;&quot;;</span>
+<span class="fc" id="L189">        String result = &quot;&quot;;</span>
 
-<span class="nc bnc" id="L191" title="All 2 branches missed.">        for (int y= ySize-1; y&gt;=0; y--) {</span>
-<span class="nc bnc" id="L192" title="All 2 branches missed.">            for(int x = 0; x&lt;xSize; x++) {</span>
-<span class="nc" id="L193">                result += squareContentSprite(x,y);</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">        for (int y= ySize-1; y&gt;=0; y--) {</span>
+<span class="fc bfc" id="L192" title="All 2 branches covered.">            for(int x = 0; x&lt;xSize; x++) {</span>
+<span class="fc" id="L193">                result += squareContentSprite(x,y);</span>
             }
-<span class="nc" id="L195">            result+=&quot;\n&quot;;</span>
+<span class="fc" id="L195">            result+=&quot;\n&quot;;</span>
         }
-<span class="nc" id="L197">        return result;</span>
+<span class="fc" id="L197">        return result;</span>
     }
     
 

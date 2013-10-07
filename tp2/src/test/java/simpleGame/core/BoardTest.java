@@ -2,10 +2,10 @@
  * 
  */
 package simpleGame.core;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
-import static org.junit.Assert.*;
-
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,18 +15,20 @@ import org.junit.Test;
  */
 public class BoardTest {
 
+	private Board board;
+	private int xLength = 5;
+	private int yLength = 5;
+	private int somePawns = 1;
+	private Pawn p;
+	private int yPawn = 2; 
+	private int xPawn = 2;
+	
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@Before
 	public void setUp() throws Exception {
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@After
-	public void tearDown() throws Exception {
+		board = new Board(somePawns, xLength, yLength);
 	}
 
 	/**
@@ -34,7 +36,7 @@ public class BoardTest {
 	 */
 	@Test
 	public void testGetXSize() {
-		fail("Not yet implemented");
+		assertEquals(board.getXSize(), xLength);
 	}
 
 	/**
@@ -42,15 +44,17 @@ public class BoardTest {
 	 */
 	@Test
 	public void testGetYSize() {
-		fail("Not yet implemented");
+		assertEquals(board.getYSize(), yLength);
 	}
 
 	/**
 	 * Test method for {@link simpleGame.core.Board#Board(int, int, int)}.
 	 */
-	@Test
+	@Test (expected=IndexOutOfBoundsException.class)
 	public void testBoard() {
-		fail("Not yet implemented");
+		assertTrue(board.getNextPawn()!=null);
+		board = new Board(0, xLength, yLength);
+		assertTrue(board.getNextPawn()==null);
 	}
 
 	/**
@@ -58,7 +62,13 @@ public class BoardTest {
 	 */
 	@Test
 	public void testGetSquareContent() {
-		fail("Not yet implemented");
+		p = new Pawn('x', xPawn, yPawn, board);
+		board.addPawn(p);
+		assertTrue(p == board.getSquareContent(xPawn, yPawn));
+		board = new Board(1, xPawn, yPawn);
+		if(board.getSquareContent(xPawn, yPawn) != null)
+			board.removePawn(board.getSquareContent(xPawn, yPawn));
+		assertTrue(null == board.getSquareContent(xPawn, yPawn));
 	}
 
 	/**
@@ -66,7 +76,15 @@ public class BoardTest {
 	 */
 	@Test
 	public void testRemovePawn() {
-		fail("Not yet implemented");
+		p = new Pawn('x', xPawn, yPawn, board);
+		assertTrue(board.numberOfPawns() == somePawns);
+		if(board.getSquareContent(xPawn, yPawn) != null)
+			p = new Pawn('x', 0, 0, board);
+		board.addPawn(p);
+		assertTrue(board.numberOfPawns() == somePawns+1);
+		board.removePawn(p);
+		assertTrue(board.numberOfPawns() == somePawns);
+		
 	}
 
 	/**
@@ -74,7 +92,12 @@ public class BoardTest {
 	 */
 	@Test
 	public void testAddPawn() {
-		fail("Not yet implemented");
+		p = new Pawn('x', xPawn, yPawn, board);
+		assertTrue(board.numberOfPawns() == somePawns);
+		if(board.getSquareContent(xPawn, yPawn) != null)
+			p = new Pawn('x', 0, 0, board);
+		board.addPawn(p);
+		assertTrue(board.numberOfPawns() == somePawns+1);
 	}
 
 	/**
@@ -82,7 +105,14 @@ public class BoardTest {
 	 */
 	@Test
 	public void testIsBonusSquare() {
-		fail("Not yet implemented");
+		int nbOfBonus = 0;
+		for(int i = 0; i<board.getXSize(); i ++){
+			for(int j = 0; j<board.getYSize(); j ++){
+				if(board.isBonusSquare(i, j))
+					nbOfBonus ++;
+			}
+		}
+		assertTrue(nbOfBonus == 1);
 	}
 
 	/**
@@ -90,7 +120,7 @@ public class BoardTest {
 	 */
 	@Test
 	public void testNumberOfPawns() {
-		fail("Not yet implemented");
+		assertEquals(somePawns, board.numberOfPawns());
 	}
 
 	/**
@@ -98,7 +128,7 @@ public class BoardTest {
 	 */
 	@Test
 	public void testMaxGold() {
-		fail("Not yet implemented");
+		assertEquals(board.maxGold(), 0);
 	}
 
 	/**
@@ -106,7 +136,8 @@ public class BoardTest {
 	 */
 	@Test
 	public void testGetNextPawn() {
-		fail("Not yet implemented");
+		board = new Board(1, xLength, yLength);
+		assertTrue(board.getNextPawn()!=null);
 	}
 
 	/**
@@ -114,7 +145,7 @@ public class BoardTest {
 	 */
 	@Test
 	public void testSquareContentSprite() {
-		fail("Not yet implemented");
+		assertNotNull(board.squareContentSprite(1,1));
 	}
 
 	/**
@@ -122,7 +153,7 @@ public class BoardTest {
 	 */
 	@Test
 	public void testToString() {
-		fail("Not yet implemented");
+		assertNotNull(board.toString());
 	}
 
 }
