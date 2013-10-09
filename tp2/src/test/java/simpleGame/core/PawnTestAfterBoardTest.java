@@ -6,7 +6,6 @@ package simpleGame.core;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.when;
 
 import org.junit.After;
 import org.junit.Before;
@@ -29,7 +28,6 @@ public class PawnTestAfterBoardTest {
 	private int xBoard = 5;
 	private int yBoard = 5;
 	private int nbOfPawns = 2;
-	private Direction up = Direction.Up;
 	private Direction down = Direction.Down;
 	private Direction left = Direction.Left;
 	private Direction right = Direction.Right;
@@ -147,6 +145,7 @@ public class PawnTestAfterBoardTest {
 						try {
 							pawn.move(right);
 							assertTrue(pawn1.isDead());
+							assertTrue(pawn.getGold() == pawn1.getGold() + 1);
 						} catch (OutOfBoardException e) {
 							e.printStackTrace();
 						}

@@ -123,6 +123,7 @@ public class PawnTest {
 			
 			pawn.move(right);
 			assertTrue(pawn1.isDead());
+			assertTrue(pawn.getGold() == pawn1.getGold() + 1);
 			
 		} catch (OutOfBoardException e) {
 			e.printStackTrace();
