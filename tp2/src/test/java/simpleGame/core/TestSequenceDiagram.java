@@ -1,6 +1,7 @@
 package simpleGame.core;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.when;
 
 import org.junit.After;
 import org.junit.Before;
@@ -15,10 +16,6 @@ public class TestSequenceDiagram {
 
 	@Mock
 	private Board board;
-	@Mock 
-	private Pawn pawn;
-	@Mock
-	private Pawn pawn1;
 	@InjectMocks
 	private Game game;
 	
@@ -31,15 +28,23 @@ public class TestSequenceDiagram {
 	}
 	
 	@Test
-	public void isGameOverTest() {
-		
-		
-	}
-	
-	@Test
-	public void maxGoldTest() {
-		
-		
+	public void sequenceTest() {
+		//1 pawn
+		when(board.numberOfPawns()).thenReturn(1);
+		when(board.maxGold()).thenReturn(1);
+		assertTrue(game.isGameOver());
+		//2 pawns 1 gold
+		when(board.numberOfPawns()).thenReturn(2);
+		when(board.maxGold()).thenReturn(1);
+		assertFalse(game.isGameOver());
+		//2 pawns 3 gold
+		when(board.numberOfPawns()).thenReturn(2);
+		when(board.maxGold()).thenReturn(3);
+		assertTrue(game.isGameOver());
+		//1 pawn 3 gold
+		when(board.numberOfPawns()).thenReturn(1);
+		when(board.maxGold()).thenReturn(3);
+		assertTrue(game.isGameOver());
 	}
 	
 	@Test
