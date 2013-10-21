@@ -13,7 +13,7 @@ public class Game {
      */
     private Board board;
 
-    /**
+	/**
      * Constructs a Game with 2 pawns on a 4x4 board.
      */
     public Game() {
@@ -51,5 +51,19 @@ public class Game {
         OutOfBoardException {
         return this.board.getNextPawn().move(d);
     }
+
+	/**
+	 * @return the board
+	 */
+	public Board getBoard() {
+		return board;
+	}
+
+	/**
+	 * @param board the board to set
+	 */
+	public void setBoard(Board board) {
+		this.board = board;
+	}
 
 }

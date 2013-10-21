@@ -52,7 +52,9 @@ public class Pawn {
         return gold;
     }
 
-
+    public void setGold(int g){
+    	gold = g;
+    }
 
     /**
      * Creates a Pawn with 2 hitpoints and 0 gold.

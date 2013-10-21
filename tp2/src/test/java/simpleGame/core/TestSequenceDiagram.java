@@ -20,17 +20,23 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class TestSequenceDiagram {
 
-	@InjectMocks
+	@Mock
 	private Board board;
+	private Board board2;
 	@InjectMocks
 	private Game game;
 	@Mock
-	private Pawn pawn1;
+	private Pawn pawn1 = new Pawn('c',1,1, board);
 	@Mock
-	private Pawn pawn2;
+	private Pawn pawn2 = new Pawn('c',1,1, board);
+	private ArrayList<Pawn> pawns = new ArrayList<Pawn>();
 	
 	@Before
 	public void setUp() throws Exception {
+		pawns.add(pawn1);
+		pawns.add(pawn2);
+		board2 = new Board();
+		board2.setPawns(pawns);
 	}
 
 	@After
@@ -70,20 +76,26 @@ public class TestSequenceDiagram {
 		
 		when(pawn1.getGold()).thenReturn(-1);
 		when(pawn2.getGold()).thenReturn(-1);
-		assertEquals(board.maxGold(), 0);
+		assertEquals(board2.maxGold(), 0);
 		verify(pawn1, Mockito.times(1)).getGold();
 		verify(pawn2, Mockito.times(1)).getGold();
 		
-		when(pawn1.getGold()).thenReturn(-1);
+		when(pawn1.getGold()).thenReturn(1);
 		when(pawn2.getGold()).thenReturn(-1);
-		assertEquals(board.maxGold(), 1);
+		assertEquals(board2.maxGold(), 1);
+		verify(pawn1, Mockito.times(2)).getGold();
+		verify(pawn2, Mockito.times(2)).getGold();
 		
-		when(pawn1.getGold()).thenReturn(-1);
-		when(pawn2.getGold()).thenReturn(-1);
-		assertEquals(board.maxGold(), 1);
+		when(pawn1.getGold()).thenReturn(1);
+		when(pawn2.getGold()).thenReturn(3);
+		assertEquals(board2.maxGold(), 3);
+		verify(pawn1, Mockito.times(3)).getGold();
+		verify(pawn2, Mockito.times(3)).getGold();
 		
-		when(pawn1.getGold()).thenReturn(-1);
-		when(pawn2.getGold()).thenReturn(-1);
-		assertEquals(board.maxGold(), 3);
-	}
+		when(pawn1.getGold()).thenReturn(0);
+		when(pawn2.getGold()).thenReturn(0);
+		assertEquals(board2.maxGold(), 0);
+		verify(pawn1, Mockito.times(4)).getGold();
+		verify(pawn2, Mockito.times(4)).getGold();
+		}
 }

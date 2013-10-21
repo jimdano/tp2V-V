@@ -28,7 +28,7 @@ public class Board {
      */
     private ArrayList<Pawn> pawns;
 
-    /**
+	/**
      * The x position of the bonus square
      */
     private int xBonusSquare;
@@ -52,7 +52,7 @@ public class Board {
     public int getYSize() {
         return ySize;
     }
-
+    
     /**
      * Constructs a board, with pawns and a size.
      * The bonus square is selected randomly.
@@ -60,19 +60,13 @@ public class Board {
      * @param sizeX The number of squares on the x axis.
      * @param sizeY The number of squares on the y axis.
      */
-    public Board(List<Pawn> listOfPawns, int sizeX,
-                 int sizeY) {
-    	
+    public Board() {
         Random random = new Random();
-        pawns = (ArrayList<Pawn>) listOfPawns;
-        this.xSize = sizeX;
-        this.ySize = sizeY;
+        pawns = new ArrayList<Pawn>();
+        this.xSize = 5;
+        this.ySize = 5;
         this.xBonusSquare = random.nextInt(xSize);
         this.yBonusSquare = random.nextInt(ySize);
-        for(int i = 0; i<pawns.size(); i++) {
-            this.addPawn(pawns.get(i));
-        }
-        currentPawn = pawns.get(0);
     }
     
     /**
@@ -107,7 +101,7 @@ public class Board {
      * @return The pawn found, or null if no pawn.
      */
     public Pawn getSquareContent(int x, int y) {
-        for (Pawn p : pawns) {
+        for (Pawn p : getPawns()) {
             if ((p.getX() == x) &&(p.getY() == y)) {
                 return p;
             }
@@ -218,6 +212,36 @@ public class Board {
         }
         return result;
     }
-    
+
+    /**
+     * Getter pawns
+     * @return ArrayList<Pawn>
+     */
+    public ArrayList<Pawn> getPawns() {
+		return pawns;
+	}
+
+    /**
+     * Setter pawns
+     * @param pawns
+     */
+	public void setPawns(ArrayList<Pawn> pawns) {
+		this.pawns = pawns;
+	}
+
+	/**
+	 * @return the currentPawn
+	 */
+	public Pawn getCurrentPawn() {
+		return currentPawn;
+	}
+
+	/**
+	 * @param currentPawn the currentPawn to set
+	 */
+	public void setCurrentPawn(Pawn currentPawn) {
+		this.currentPawn = currentPawn;
+	}
 
 }
+

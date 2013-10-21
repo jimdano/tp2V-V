@@ -18,29 +18,48 @@ public class BoardTest {
 	private Board board;
 	private int xLength = 5;
 	private int yLength = 5;
-	private int somePawns = 1;
-	private Pawn p;
+	private int somePawns = 2;
 	private int yPawn = 2; 
 	private int xPawn = 2;
+	private char n = 'n';
+	private Pawn p ;
+	
 	
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@Before
 	public void setUp() throws Exception {
+		p = new Pawn(n, xPawn, yPawn, board);
 		board = new Board(somePawns, xLength, yLength);
 	}
 
 	/**
-	 * Test method for {@link simpleGame.core.Board#getXSize()}.
+	 * @see {@link simpleGame.core.Board#getXSize()}.
+	 * @oracle must return true ; board's x-size must be equals with attributes called xLength
+	 * @passed yes
 	 */
 	@Test
 	public void testGetXSize() {
 		assertEquals(board.getXSize(), xLength);
 	}
+	
+	/**
+	 * @see {@link simpleGame.core.Board#setCurrentPawn()}.
+	 * @oracle must affect the current pawn
+	 * @passed yes
+	 */
+	@Test
+	public void testSetCurrentPawn() {
+		board.addPawn(p);
+		board.setCurrentPawn(p);
+		assertTrue(board.getCurrentPawn() == p);
+	}
 
 	/**
-	 * Test method for {@link simpleGame.core.Board#getYSize()}.
+	 * @see {@link simpleGame.core.Board#getYSize()}.
+	 * @oracle must return true ; board's y-size must be equals with attributes called yLength
+	 * @passed yes
 	 */
 	@Test
 	public void testGetYSize() {
@@ -48,7 +67,11 @@ public class BoardTest {
 	}
 
 	/**
-	 * Test method for {@link simpleGame.core.Board#Board(int, int, int)}.
+	 * @see {@link simpleGame.core.Board#Board(int, int, int)}.
+	 * @exception IndexOutOfBoundsException
+	 * @throws IndexOutOfBoundsException
+	 * @oracle must throw IndexOutOfBoundsException
+	 * @passed yes
 	 */
 	@Test (expected=IndexOutOfBoundsException.class)
 	public void testBoard() {
@@ -58,11 +81,12 @@ public class BoardTest {
 	}
 
 	/**
-	 * Test method for {@link simpleGame.core.Board#getSquareContent(int, int)}.
+	 * @see {@link simpleGame.core.Board#getSquareContent(int, int)}.
+	 * @oracle return  the pawn insert before
+	 * @passed yes
 	 */
 	@Test
 	public void testGetSquareContent() {
-		p = new Pawn('x', xPawn, yPawn, board);
 		board.addPawn(p);
 		assertTrue(p == board.getSquareContent(xPawn, yPawn));
 		board = new Board(1, xPawn, yPawn);
@@ -72,14 +96,15 @@ public class BoardTest {
 	}
 
 	/**
-	 * Test method for {@link simpleGame.core.Board#removePawn(simpleGame.core.Pawn)}.
+	 * @see {@link simpleGame.core.Board#removePawn(simpleGame.core.Pawn)}.
+	 * @oracle remove pawn insert before
+	 * @passed yes
 	 */
 	@Test
 	public void testRemovePawn() {
-		p = new Pawn('x', xPawn, yPawn, board);
 		assertTrue(board.numberOfPawns() == somePawns);
 		if(board.getSquareContent(xPawn, yPawn) != null)
-			p = new Pawn('x', 0, 0, board);
+			p = new Pawn(n, 0, 0, board);
 		board.addPawn(p);
 		assertTrue(board.numberOfPawns() == somePawns+1);
 		board.removePawn(p);
@@ -88,20 +113,23 @@ public class BoardTest {
 	}
 
 	/**
-	 * Test method for {@link simpleGame.core.Board#addPawn(simpleGame.core.Pawn)}.
+	 * @see {@link simpleGame.core.Board#addPawn(simpleGame.core.Pawn)}.
+	 * @oracle increase count of pawn when a new pawn was add into board
+	 * @passed yes
 	 */
 	@Test
 	public void testAddPawn() {
-		p = new Pawn('x', xPawn, yPawn, board);
 		assertTrue(board.numberOfPawns() == somePawns);
 		if(board.getSquareContent(xPawn, yPawn) != null)
-			p = new Pawn('x', 0, 0, board);
+			p = new Pawn(n, 0, 0, board);
 		board.addPawn(p);
 		assertTrue(board.numberOfPawns() == somePawns+1);
 	}
 
 	/**
-	 * Test method for {@link simpleGame.core.Board#isBonusSquare(int, int)}.
+	 * @see {@link simpleGame.core.Board#isBonusSquare(int, int)}.
+	 * @oracle certify that there is only one bonus case into the board
+	 * @passed yes
 	 */
 	@Test
 	public void testIsBonusSquare() {
@@ -116,23 +144,43 @@ public class BoardTest {
 	}
 
 	/**
-	 * Test method for {@link simpleGame.core.Board#numberOfPawns()}.
+	 * @see {@link simpleGame.core.Board#numberOfPawns()}.
+	 * @oracle must return the good number of pawn at the initialization of the board
+	 * @passed yes
 	 */
 	@Test
 	public void testNumberOfPawns() {
 		assertEquals(somePawns, board.numberOfPawns());
+		if(board.getSquareContent(p.getX(), p.getY()) != null) {
+			board.addPawn(p);
+			assertEquals(somePawns + 1, board.numberOfPawns());
+			board.removePawn(p);
+			assertEquals(somePawns, board.numberOfPawns());
+		}
 	}
 
 	/**
-	 * Test method for {@link simpleGame.core.Board#maxGold()}.
+	 * @see {@link simpleGame.core.Board#maxGold()}.
+	 * @see TestSeqenceDiagramm
+	 * @oracle must return the number of max gold at the initialization of the board
+	 * @passed yes
 	 */
 	@Test
 	public void testMaxGold() {
 		assertEquals(board.maxGold(), 0);
+		Pawn p = board.getNextPawn();
+		if(p!= null){
+			p.setGold(5);
+			assertTrue(board.maxGold() == 5);
+			p.setGold(-1);
+			assertTrue(board.maxGold() == 0);
+		}
 	}
 
 	/**
-	 * Test method for {@link simpleGame.core.Board#getNextPawn()}.
+	 * @see {@link simpleGame.core.Board#getNextPawn()}.
+	 * @oracle return the next pawn
+	 * @passed yes
 	 */
 	@Test
 	public void testGetNextPawn() {
@@ -141,15 +189,39 @@ public class BoardTest {
 	}
 
 	/**
-	 * Test method for {@link simpleGame.core.Board#squareContentSprite(int, int)}.
+	 * @see {@link simpleGame.core.Board#squareContentSprite(int, int)}.
+	 * @oracle prove that board is correctly create
+	 * @passed yes
 	 */
 	@Test
 	public void testSquareContentSprite() {
-		assertNotNull(board.squareContentSprite(1,1));
+		for (int i = 0; i < board.getXSize(); i++) {
+			for (int j = 0; j < board.getYSize(); j++) {
+				
+				if (board.isBonusSquare(i, j)) {
+					assertEquals('#', board.squareContentSprite(i,j));
+				}
+				else if (board.getSquareContent(i, j) == null) {
+					assertEquals('.', board.squareContentSprite(i,j));
+				}
+				else {
+					Pawn courant = board.getSquareContent(i, j);
+					if (board.getCurrentPawn().equals(courant)) {
+						assertEquals('c', board.squareContentSprite(courant.getX(), courant.getY()));
+					}else{
+						assertTrue(courant.getLetter() != 'c' && 
+								courant.getLetter() != '.' &&
+								courant.getLetter() != '#');
+					}
+				}
+			}
+		}
 	}
 
 	/**
-	 * Test method for {@link simpleGame.core.Board#toString()}.
+	 * @see {@link simpleGame.core.Board#toString()}.
+	 * @oracle return representation of board
+	 * @passed yes
 	 */
 	@Test
 	public void testToString() {
