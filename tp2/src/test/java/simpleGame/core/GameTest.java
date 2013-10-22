@@ -1,46 +1,27 @@
-/**
- *
- */
 package simpleGame.core;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import simpleGame.exception.OutOfBoardException;
-
 /**
- * @author jimmy
+ * @author jimmy Dano & Anthony Le Mee
  * 
  */
 public class GameTest {
 
 	/** Déclaration des attributs */
 	
-	// Attributs du pion 1
-	private Pawn pawn1;
-	private int yPawn1 = 1;
-	private int xPawn1 = 1;
-	
-	// Attributs du pion 2
-	private Pawn pawn2;
-	private int yPawn2 = 1;
-	private int xPawn2 = 0;
-	
-	// Attributs du game
+	/** the game used for tests */
 	private Game game;
 
-	// Attributs du board
+	/** properties of the board used in the game */
 	private Board board;
 	private int somePawns = 2;
 	private int xLength = 5;
 	private int yLength = 5;
-	private Direction down = Direction.Down;
-	private Direction left = Direction.Left;
-	private Direction right = Direction.Right;
 
 	/**
 	 * @throws java.lang.Exception
@@ -51,8 +32,6 @@ public class GameTest {
 		game = new Game();
 		game.setBoard(new Board(somePawns, xLength, yLength));
 		board = game.getBoard();
-		pawn1 = new Pawn('a', xPawn1, yPawn1, game.getBoard());
-		pawn2 = new Pawn('b', xPawn2, yPawn2, game.getBoard());
 	}
 
 	/**
@@ -75,9 +54,7 @@ public class GameTest {
 	 */
 	@Test
 	public void testToString() {
-
 		assertEquals(game.toString(), board.toString());
-
 	}
 
 }

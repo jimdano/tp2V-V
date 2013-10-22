@@ -1,6 +1,3 @@
-/**
- * 
- */
 package simpleGame.core;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -10,19 +7,36 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * @author jimmy
+ * @author jimmy Dano & Anthony Le Mee
  *
  */
 public class BoardTest {
 
+	/**
+	 * the board used for tests
+	 */
 	private Board board;
+	/**
+	 * size of the board
+	 */
 	private int xLength = 5;
 	private int yLength = 5;
+	/**
+	 * pawns we would like to add in the board
+	 */
 	private int somePawns = 2;
+	/**
+	 * properties for the pawns
+	 */
 	private int yPawn = 2; 
 	private int xPawn = 2;
 	private char n = 'n';
 	private Pawn p ;
+	/**
+	 * variables used for testing
+	 */
+	private int nbOfPawns;
+	private int nbOfBonus;
 	
 	
 	/**
@@ -81,6 +95,46 @@ public class BoardTest {
 	}
 
 	/**
+	 * @see {@link simpleGame.core.Board#removePawn(simpleGame.core.Pawn)}.
+	 * @oracle remove pawn insert before
+	 * @passed yes
+	 */
+	@Test
+	public void testRemovePawn() {
+		nbOfPawns = board.numberOfPawns();
+		for(int i = 0; i<board.getXSize(); i ++){
+			for(int j = 0; j<board.getYSize(); j ++){
+				if(board.getSquareContent(i, j) == null){
+					board.addPawn(p);
+					assertTrue(board.numberOfPawns() == nbOfPawns+1);
+					board.removePawn(p);
+					assertTrue(board.numberOfPawns() == nbOfPawns);
+					break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * @see {@link simpleGame.core.Board#addPawn(simpleGame.core.Pawn)}.
+	 * @oracle increase count of pawn when a new pawn was add into board
+	 * @passed yes
+	 */
+	@Test
+	public void testAddPawn() {
+		nbOfPawns = board.numberOfPawns();
+		for(int i = 0; i<board.getXSize(); i ++){
+			for(int j = 0; j<board.getYSize(); j ++){
+				if(board.getSquareContent(i, j) == null){
+					board.addPawn(p);
+					assertTrue(board.numberOfPawns() == nbOfPawns+1);
+					break;
+				}
+			}
+		}
+	}
+	
+	/**
 	 * @see {@link simpleGame.core.Board#getSquareContent(int, int)}.
 	 * @oracle return  the pawn insert before
 	 * @passed yes
@@ -96,44 +150,13 @@ public class BoardTest {
 	}
 
 	/**
-	 * @see {@link simpleGame.core.Board#removePawn(simpleGame.core.Pawn)}.
-	 * @oracle remove pawn insert before
-	 * @passed yes
-	 */
-	@Test
-	public void testRemovePawn() {
-		assertTrue(board.numberOfPawns() == somePawns);
-		if(board.getSquareContent(xPawn, yPawn) != null)
-			p = new Pawn(n, 0, 0, board);
-		board.addPawn(p);
-		assertTrue(board.numberOfPawns() == somePawns+1);
-		board.removePawn(p);
-		assertTrue(board.numberOfPawns() == somePawns);
-		
-	}
-
-	/**
-	 * @see {@link simpleGame.core.Board#addPawn(simpleGame.core.Pawn)}.
-	 * @oracle increase count of pawn when a new pawn was add into board
-	 * @passed yes
-	 */
-	@Test
-	public void testAddPawn() {
-		assertTrue(board.numberOfPawns() == somePawns);
-		if(board.getSquareContent(xPawn, yPawn) != null)
-			p = new Pawn(n, 0, 0, board);
-		board.addPawn(p);
-		assertTrue(board.numberOfPawns() == somePawns+1);
-	}
-
-	/**
 	 * @see {@link simpleGame.core.Board#isBonusSquare(int, int)}.
 	 * @oracle certify that there is only one bonus case into the board
 	 * @passed yes
 	 */
 	@Test
 	public void testIsBonusSquare() {
-		int nbOfBonus = 0;
+		nbOfBonus = 0;
 		for(int i = 0; i<board.getXSize(); i ++){
 			for(int j = 0; j<board.getYSize(); j ++){
 				if(board.isBonusSquare(i, j))
@@ -145,25 +168,32 @@ public class BoardTest {
 
 	/**
 	 * @see {@link simpleGame.core.Board#numberOfPawns()}.
-	 * @oracle must return the good number of pawn at the initialization of the board
+	 * @oracle must return the good number of pawn at the initialization of the board and after insertion or deletion
 	 * @passed yes
 	 */
 	@Test
 	public void testNumberOfPawns() {
-		
-		assertEquals(somePawns, board.numberOfPawns());
-		for (int i = 0; i < board.getXSize(); i++) {
-			for (int j = 0 ; j < board.getYSize(); j++) {
-				if(board.getSquareContent(i, j) == null) {
+		nbOfPawns = board.numberOfPawns();
+		for(int i = 0; i<board.getXSize(); i ++){
+			for(int j = 0; j<board.getYSize(); j ++){
+				if(board.getSquareContent(i, j) == null){
+					p = new Pawn(n, i, j, board);
 					board.addPawn(p);
-					assertEquals(somePawns + 1, board.numberOfPawns());
-					board.removePawn(p);
-					assertEquals(somePawns, board.numberOfPawns());
-					break;
+					nbOfPawns ++;
+					assertTrue(board.numberOfPawns() == nbOfPawns);
 				}
 			}
 		}
-		
+		for(int i = 0; i<board.getXSize(); i ++){
+			for(int j = 0; j<board.getYSize(); j ++){
+				if(board.getSquareContent(i, j) != null){
+					board.removePawn(board.getSquareContent(i, j));
+					nbOfPawns --;
+					assertTrue(board.numberOfPawns() == nbOfPawns);
+				}
+			}
+		}
+		assertTrue(board.numberOfPawns() == 0);
 	}
 
 	/**
@@ -204,7 +234,6 @@ public class BoardTest {
 	public void testSquareContentSprite() {
 		for (int i = 0; i < board.getXSize(); i++) {
 			for (int j = 0; j < board.getYSize(); j++) {
-				
 				if (board.isBonusSquare(i, j)) {
 					assertEquals('#', board.squareContentSprite(i,j));
 				}

@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Board.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tp2</a> &gt; <a href="index.html" class="el_package">simpleGame.core</a> &gt; <span class="el_source">Board.java</span></div><h1>Board.java</h1><pre class="source lang-java linenums">package simpleGame.core;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+/**
+ * Describes the board on which Pawns can move.
+ * It is of rectangular shape, and is made of squares.
+ * One of the square is a &quot;bonus&quot; square: it allows pawns to be stronger.
+ * @author Erwan Bousse
+ *
+ */
+public class Board {
+
+    /**
+     * The number of squares on the x axis.
+     */
+    private int xSize;
+
+    /**
+     * The number of squares on the y axis.
+     */
+    private int ySize;
+
+    /**
+     * The Pawns that currently are on the board.
+     */
+    private ArrayList&lt;Pawn&gt; pawns;
+
+	/**
+     * The x position of the bonus square
+     */
+    private int xBonusSquare;
+
+    /**
+     * the y position of the bonus square
+     */
+    private int yBonusSquare;
+
+    /**
+     * An iterator pointing towards the current pawn that must play.
+     */
+    private Pawn currentPawn;
+
+
+
+    public int getXSize() {
+<span class="fc" id="L49">        return xSize;</span>
+    }
+
+    public int getYSize() {
+<span class="fc" id="L53">        return ySize;</span>
+    }
+    
+    /**
+     * Constructs a board, with pawns and a size.
+     * The bonus square is selected randomly.
+     */
+<span class="fc" id="L60">    public Board() {</span>
+<span class="fc" id="L61">        Random random = new Random();</span>
+<span class="fc" id="L62">        pawns = new ArrayList&lt;Pawn&gt;();</span>
+<span class="fc" id="L63">        this.xSize = 5;</span>
+<span class="fc" id="L64">        this.ySize = 5;</span>
+<span class="fc" id="L65">        this.xBonusSquare = random.nextInt(xSize);</span>
+<span class="fc" id="L66">        this.yBonusSquare = random.nextInt(ySize);</span>
+<span class="fc" id="L67">    }</span>
+    
+    /**
+     * Constructs a board, with a number of pawns and a size.
+     * The pawns are spread randomly.
+     * The bonus square is selected randomly.
+     * @param numberOfPawns The number of pawns.
+     * @param sizeX The number of squares on the x axis.
+     * @param sizeY The number of squares on the y axis.
+     */
+<span class="fc" id="L77">    public Board(int numberOfPawns, int sizeX,</span>
+                 int sizeY) {
+<span class="fc" id="L79">        Random random = new Random();</span>
+<span class="fc" id="L80">        this.xSize = sizeX;</span>
+<span class="fc" id="L81">        this.ySize = sizeY;</span>
+<span class="fc" id="L82">        this.xBonusSquare = random.nextInt(xSize);</span>
+<span class="fc" id="L83">        this.yBonusSquare = random.nextInt(ySize);</span>
+<span class="fc" id="L84">        this.pawns = new ArrayList&lt;Pawn&gt;();</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">        for(int i = 0; i&lt;numberOfPawns; i++) {</span>
+<span class="fc" id="L86">            Pawn pawn = new Pawn(Character.forDigit(i, 10),</span>
+<span class="fc" id="L87">                                 random.nextInt(xSize),random.nextInt(ySize),this);</span>
+<span class="fc" id="L88">            this.addPawn(pawn);</span>
+        }
+
+<span class="fc" id="L91">        currentPawn = pawns.get(0);</span>
+<span class="fc" id="L92">    }</span>
+
+    /**
+     * Finds the content of a square.
+     * @param x The x axis value.
+     * @param y The y axis value.
+     * @return The pawn found, or null if no pawn.
+     */
+    public Pawn getSquareContent(int x, int y) {
+<span class="fc bfc" id="L101" title="All 2 branches covered.">        for (Pawn p : getPawns()) {</span>
+<span class="fc bfc" id="L102" title="All 4 branches covered.">            if ((p.getX() == x) &amp;&amp;(p.getY() == y)) {</span>
+<span class="fc" id="L103">                return p;</span>
+            }
+        }
+<span class="fc" id="L106">        return null;</span>
+    }
+
+    /**
+     * Removes a pawn from the board.
+     * @param pawn The pawn to remove.
+     */
+    public void removePawn(Pawn pawn) {
+<span class="fc" id="L114">        pawns.remove(pawn);</span>
+<span class="fc" id="L115">    }</span>
+
+    /**
+     * Adds a pawn to the board.
+     * @param pawn The pawn to add.
+     */
+    public void addPawn(Pawn pawn) {
+<span class="fc bfc" id="L122" title="All 2 branches covered.">        if (getSquareContent(pawn.getX(),</span>
+<span class="fc" id="L123">                             pawn.getY()) == null)</span>
+<span class="fc" id="L124">            this.pawns.add(pawn);</span>
+<span class="fc" id="L125">    }</span>
+
+    /**
+     * Decides whether a square is bonus or not.
+     * @param x The x axis value.
+     * @param y The y axis value.
+     * @return True if the square is bonus, false otherwise.
+     */
+    public boolean isBonusSquare(int x, int y) {
+<span class="fc bfc" id="L134" title="All 4 branches covered.">        return x==xBonusSquare &amp;&amp; y==yBonusSquare;</span>
+    }
+
+
+    /**
+     * Finds the number of pawns on the board.
+     * @return The number of pawns on the board.
+     */
+    public int numberOfPawns() {
+<span class="fc" id="L143">        return pawns.size();</span>
+    }
+
+    /**
+     * Computes the maximum amount of golf that a Pawn has.
+     * @return The maximum amount of golf that a Pawn has.
+     */
+    public int maxGold() {
+<span class="fc" id="L151">        int max = 0;</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">        for (Pawn p : pawns) {</span>
+<span class="fc" id="L153">            max = Math.max(max, p.getGold());</span>
+        }
+<span class="fc" id="L155">        return max;</span>
+    }
+
+    /**
+     * Picks the next pawn that is allowed to play.
+     * @return The next pawn that is allowed to play.
+     */
+    public Pawn getNextPawn() {
+<span class="fc bfc" id="L163" title="All 2 branches covered.">        if (pawns.size() == 1) {</span>
+<span class="fc" id="L164">            currentPawn = pawns.get(0);</span>
+<span class="fc" id="L165">            return pawns.get(0);</span>
+        }
+        else {
+<span class="fc" id="L168">            Pawn result = currentPawn;</span>
+<span class="fc" id="L169">            currentPawn = this.pawns.get((this.pawns.indexOf(</span>
+<span class="fc" id="L170">                                              currentPawn)+1)%this.pawns.size());</span>
+<span class="fc" id="L171">            return result;</span>
+        }
+    }
+
+    /**
+     * Computes the char that should be displayed to represent the square or its content.
+     * @param x The x axis value.
+     * @param y The y axis value.
+     * @return # if bonus, . if empty, c if current Pawn, a number for a non-current Pawn
+     */
+    public char squareContentSprite(int x, int y) {
+        char result;
+<span class="fc" id="L183">        Pawn content = getSquareContent(x,y);</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">        if (content == null) {</span>
+<span class="fc bfc" id="L185" title="All 2 branches covered.">            if (isBonusSquare(x, y)) {</span>
+<span class="fc" id="L186">                result = '#';</span>
+<span class="fc" id="L187">            } else</span>
+<span class="fc" id="L188">                result = '.';</span>
+<span class="fc" id="L189">        } else {</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">            if (content == currentPawn) {</span>
+<span class="fc" id="L191">                result = 'c';</span>
+<span class="fc" id="L192">            } else</span>
+<span class="fc" id="L193">                result = content.getLetter();</span>
+        }
+<span class="fc" id="L195">        return result;</span>
+    }
+
+    /**
+     * Computes a String that represents the whole board.
+     */
+    public String toString() {
+<span class="fc" id="L202">        String result = &quot;&quot;;</span>
+
+<span class="fc bfc" id="L204" title="All 2 branches covered.">        for (int y= ySize-1; y&gt;=0; y--) {</span>
+<span class="fc bfc" id="L205" title="All 2 branches covered.">            for(int x = 0; x&lt;xSize; x++) {</span>
+<span class="fc" id="L206">                result += squareContentSprite(x,y);</span>
+            }
+<span class="fc" id="L208">            result+=&quot;\n&quot;;</span>
+        }
+<span class="fc" id="L210">        return result;</span>
+    }
+
+    /**
+     * Getter pawns
+     * @return ArrayList&lt;Pawn&gt;
+     */
+    public ArrayList&lt;Pawn&gt; getPawns() {
+<span class="fc" id="L218">		return pawns;</span>
+	}
+
+    /**
+     * Setter pawns
+     * @param pawns
+     */
+	public void setPawns(ArrayList&lt;Pawn&gt; pawns) {
+<span class="fc" id="L226">		this.pawns = pawns;</span>
+<span class="fc" id="L227">	}</span>
+
+	/**
+	 * @return the currentPawn
+	 */
+	public Pawn getCurrentPawn() {
+<span class="fc" id="L233">		return currentPawn;</span>
+	}
+
+	/**
+	 * @param currentPawn the currentPawn to set
+	 */
+	public void setCurrentPawn(Pawn currentPawn) {
+<span class="fc" id="L240">		this.currentPawn = currentPawn;</span>
+<span class="fc" id="L241">	}</span>
+
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.3.201306030806</span></div></body></html>
