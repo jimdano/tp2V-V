@@ -56,9 +56,6 @@ public class Board {
     /**
      * Constructs a board, with pawns and a size.
      * The bonus square is selected randomly.
-     * @param listOfPawns The pawns.
-     * @param sizeX The number of squares on the x axis.
-     * @param sizeY The number of squares on the y axis.
      */
     public Board() {
         Random random = new Random();

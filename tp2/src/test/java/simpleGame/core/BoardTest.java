@@ -150,13 +150,20 @@ public class BoardTest {
 	 */
 	@Test
 	public void testNumberOfPawns() {
+		
 		assertEquals(somePawns, board.numberOfPawns());
-		if(board.getSquareContent(p.getX(), p.getY()) != null) {
-			board.addPawn(p);
-			assertEquals(somePawns + 1, board.numberOfPawns());
-			board.removePawn(p);
-			assertEquals(somePawns, board.numberOfPawns());
+		for (int i = 0; i < board.getXSize(); i++) {
+			for (int j = 0 ; j < board.getYSize(); j++) {
+				if(board.getSquareContent(i, j) == null) {
+					board.addPawn(p);
+					assertEquals(somePawns + 1, board.numberOfPawns());
+					board.removePawn(p);
+					assertEquals(somePawns, board.numberOfPawns());
+					break;
+				}
+			}
 		}
+		
 	}
 
 	/**
